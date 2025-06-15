@@ -1,6 +1,6 @@
 import {watch} from 'fs';
 import browserSync from 'browser-sync';
-import {bundleJs, generateStatic, compileSass} from './build.js';
+import {bundleJs, generateHtml, compileSass} from './build.js';
 import {projectPaths, config} from './build.config.js';
 
 const bs = browserSync.create();
@@ -12,8 +12,8 @@ async function startServer() {
 async function watchFiles() {
   const watchList = [
     {path: projectPaths.styles.srcDir, action: compileSass, label: 'SASS'},
-    {path: projectPaths.templatesDir, action: generateStatic, label: 'EJS'},
-    {path: projectPaths.pagesSrcDir, action: generateStatic, label: 'HTML'},
+    {path: projectPaths.templates.dir, action: generateHtml, label: 'EJS'},
+    {path: projectPaths.articles.srcDir, action: generateHtml, label: 'HTML'},
     {path: projectPaths.js.src, action: bundleJs, label: 'JS'}
   ];
   const lastEvent = new Map();
@@ -25,7 +25,6 @@ async function watchFiles() {
       lastEvent.set(label, now);
       try {
         await action(filename);
-        // bs.reload();
       } catch (err) {
         console.error(`WATCH ${label} ERR:`, err);
       }
