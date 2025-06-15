@@ -1,5 +1,5 @@
 /**
- * @type {import('fs-extra').default}
+ * @type {import('fs-extra')}
  */
 import fs from 'fs-extra';
 import ejs from 'ejs';
@@ -17,18 +17,18 @@ import {optimize} from 'svgo';
 import {projectPaths, config, isApacheServer, DEV_MODE} from './build.config.js';
 import {exec} from 'child_process';
 
-fs.emptyDir('dist');
+fs.emptyDir(projectPaths.distDir);
 
-const articles = JSON.parse(await fs.readFile(projectPaths.jsonArticleData, 'utf8'));
+const articles = JSON.parse(await fs.readFile(projectPaths.articles.metaData, 'utf8'));
 
-export async function generateStatic() {
-  const template = await fs.readFile(projectPaths.mainTemplate, 'utf8');
+export async function generateHtml() {
+  const template = await fs.readFile(projectPaths.templates.index, 'utf8');
 
   for (const article of articles) {
-    const html = ejs.render(template, {articles, ...article, isApacheServer, DEV_MODE}, {filename: projectPaths.mainTemplate});
+    const html = ejs.render(template, {articles, ...article, isApacheServer, DEV_MODE }, { filename: projectPaths.templates.index });
     const outputPath = article.name === 'index' ?
       path.join(projectPaths.distDir, 'index.html')
-      : path.join(projectPaths.distArticlesDir, `${article.name}.html`);
+      : path.join(projectPaths.articles.distDir, `${article.name}.html`);
     await fs.ensureDir(path.dirname(outputPath));
     if (!DEV_MODE) {
       const minified = await minify(html, config.html);
@@ -40,14 +40,14 @@ export async function generateStatic() {
 }
 
 async function generateSitemap() {
-  const sitemapTemplate = await fs.readFile(projectPaths.sitemapTemplate, 'utf8');
+  const sitemapTemplate = await fs.readFile(projectPaths.templates.sitemap, 'utf8');
   const sitemap = ejs.render(sitemapTemplate, {articles});
   fs.writeFile(path.join(projectPaths.distDir, 'sitemap.xml'), sitemap);
 }
 
 async function generateRss() {
   try {
-    const rssTemplate = await fs.readFile(projectPaths.rssTemplate, 'utf8');
+    const rssTemplate = await fs.readFile(projectPaths.templates.rss, 'utf8');
     const rssContent = ejs.render(rssTemplate, {articles});
     await fs.writeFile(path.join(projectPaths.distDir, 'feed.xml'), rssContent);
   } catch (err) {
@@ -122,7 +122,7 @@ async function copyFiles() {
     fs.copy(projectPaths.assetsDir, projectPaths.distDir, {
       overwrite: true,
       filter: (src) => {
-        if (!isApacheServer && path.basename(src) === '.htaccess') {return false;}
+        if (!isApacheServer && path.basename(src) === '.htaccess') { return false; }
         // exclude img folder from copying; images processed by optimizeImages()
         const rel = path.relative(projectPaths.assetsDir, src);
         const parts = rel.split(path.sep);
@@ -193,7 +193,12 @@ async function generateFavicons() {
 }
 
 async function createSearchIndex(outputDir) {
-  exec(`npx -y pagefind --site ${outputDir}`);
+  try {
+    exec(`npx -y pagefind --site ${outputDir}`);
+  } 
+  catch (error) {
+    console.error('CREATE INDEX ERROR:', error.message);
+  }
 }
 
 async function runBuild() {
@@ -202,7 +207,7 @@ async function runBuild() {
   await Promise.all([
     createSearchIndex(projectPaths.distDir),
     generateFavicons(),
-    generateStatic(),
+    generateHtml(),
     generateSitemap(),
     generateRss(),
     bundleJs(),

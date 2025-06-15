@@ -10,23 +10,27 @@ export const DEV_MODE = process.env.NODE_ENV === 'development';
 
 export const projectPaths = {
   srcDir: path.join(rootDir, 'src'),
-  templatesDir: path.join(rootDir,'src','template'),
-  mainTemplate: path.join(rootDir, 'src', 'template', 'template.ejs'),
   distDir: path.join(rootDir, 'dist'),
-  distArticlesDir: path.join(rootDir, 'dist', 'articles'),
   assetsDir: path.join(rootDir, 'assets'),
-  jsonArticleData: path.join(rootDir, 'src', 'template', 'articles.json'),
-  sitemapTemplate: path.join(rootDir, 'src', 'template', 'sitemap.ejs'),
-  rssTemplate: path.join(rootDir, 'src', 'template', 'rss.ejs'),
-  pagesSrcDir: path.join(rootDir, 'src', 'pages'),
+  templates: {
+    dir: path.join(rootDir,'src','template'),
+    index: path.join(rootDir, 'src', 'template', 'index.ejs'),
+    sitemap: path.join(rootDir, 'src', 'template', 'sitemap.ejs'),
+    rss: path.join(rootDir, 'src', 'template', 'rss.ejs')
+  },
+  articles: {
+    srcDir: path.join(rootDir, 'src', 'articles'),
+    distDir: path.join(rootDir, 'dist', 'articles'),
+    metaData: path.join(rootDir, 'src', 'template', 'articles.json')
+  },
   styles: {
     src: path.join(rootDir, 'src', 'styles', 'main.scss'),
     srcDir: path.join(rootDir, 'src', 'styles'),
     dist: path.join(rootDir, 'dist', 'main.css')
   },
   js: {
-    src: path.join(rootDir, 'src', 'main.js'),
-    dist: path.join(rootDir, 'dist', 'main.js')
+    src: path.join(rootDir, 'src', 'scripts', 'index.mjs'),
+    dist: path.join(rootDir, 'dist', 'index.mjs')
   },
   images: {
     srcDir: path.join(rootDir, 'assets', 'img'),
@@ -38,10 +42,10 @@ export const projectPaths = {
 export const config = {
   browserSync: {
     files: [
-      `${projectPaths.distDir}/**/*.{html,css,js}`
+      path.posix.join(projectPaths.distDir, '**', '*.{html,css,js}')
     ],
     ignore: [
-      `${projectPaths.distDir}/pagefind/**/*`
+      path.posix.join(projectPaths.distDir, 'pagefind', '**', '*')
     ],
     server: {
       baseDir: projectPaths.distDir,
@@ -61,12 +65,11 @@ export const config = {
     // proxy: 'myDomain.local',
     // logLevel: 'debug',
     // port: 3000,
-    // Configuration for injecting the BrowserSync snippet into HTML files
     // snippetOptions: {
     //   rule: {
     //     match: /<\/head>/i, // Match the closing </head> tag
     //     fn: function(snippet, match) {
-    //       return snippet + match; // Inject the snippet before the closing </head> tag
+    //       return snippet + match; // inject snippet before closing </head>
     //     }
     //   }
     // }
@@ -92,9 +95,9 @@ export const config = {
 
   esbuild: {
     entryPoints: [projectPaths.js.src],
-    outdir: projectPaths.distDir,
+    outfile: projectPaths.js.dist,
     minify: true,
-    bundle: false,
+    bundle: true,
     format: 'esm',
     sourcemap: false,
     define: {
