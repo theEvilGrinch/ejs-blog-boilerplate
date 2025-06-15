@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#<%= name === 'index' ? '' : ' article: http://ogp.me/ns/article#' %>">
+<head>
+  <%-  include('_head.ejs') %>
+</head>
+
+<body>
+<header>
+  <%- include('_header.ejs') %>
+</header>
+
+<main id="main-content">
+  <%- include(`../pages/${name}.html`, {name}) %>
+</main>
+
+<aside class="aside-right">
+  <%- include('_aside-right.ejs') %>
+</aside>
+
+<aside class="aside-left">
+  <%- include('_aside-left.ejs') %>
+</aside>
+
+<footer>
+  <%- include('_footer.ejs') %>
+</footer>
+</body>
+</html>
