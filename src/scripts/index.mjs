@@ -8,7 +8,7 @@ if (DEV_MODE) {
 }
 
 // noinspection JSUnresolvedReference
-new PagefindUI({ element: '.search', showSubResults: true, showImages: false});
+new PagefindUI({ element: '[data-pagefind]', showSubResults: true, showImages: false});
 
 setColorTheme();
 setCookies();
