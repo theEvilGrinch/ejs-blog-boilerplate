@@ -1,5 +1,18 @@
 @use "core";
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -34,11 +47,17 @@ header,
 footer {
   width: 100vw;
   margin: 0 -30px;
-  padding: 0 30px;
+  padding: 5px 30px 15px;
   height: max-content;
 }
 
 header {
+  text-align: center;
+
+  search {
+    margin-block: 15px;
+  }
+
   nav ul {
     display: flex;
     justify-content: center;
@@ -46,16 +65,41 @@ header {
   }
 }
 
-aside.left,
-aside.right {
+.aside-left,
+.aside-right {
   width: clamp(200px, 20%, 300px);
   flex-grow: 1;
+
+  h4 {
+    text-align: center;
+  }
 }
 
 main {
   width: 60%;
   flex-grow: 1;
   padding: 0 30px;
+}
+
+footer {
+  .copyright {
+    margin-bottom: 30px;
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    a[href="humans.txt"] {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+  }
 }
 
 dialog {
@@ -68,8 +112,7 @@ a[href="https://github.com/theEvilGrinch/"] {
 }
 
 button[data-toggle-theme] {
-  display: block;
-  margin: 15px auto;
+  margin-block: 15px;
 }
 
 a.scroll-to-top {
@@ -102,5 +145,15 @@ a.scroll-to-top {
   body {
     background-color: #4d4d4d;
     color: #f1f1f1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

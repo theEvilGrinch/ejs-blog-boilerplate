@@ -4,7 +4,6 @@
 import fs from 'fs-extra';
 import ejs from 'ejs';
 import {minify} from 'html-minifier-terser';
-import * as sass from 'sass';
 import {build} from 'esbuild';
 import {readFile, writeFile, mkdir} from 'fs/promises';
 import {existsSync} from 'fs';
@@ -16,6 +15,7 @@ import imageminPngquant from 'imagemin-pngquant';
 import {optimize} from 'svgo';
 import {projectPaths, config, isApacheServer, DEV_MODE} from './build.config.js';
 import {exec} from 'child_process';
+import {compileAsync} from 'sass';
 
 fs.emptyDir(projectPaths.distDir);
 
@@ -102,7 +102,7 @@ async function optimizeImages() {
 
 export async function compileSass() {
   try {
-    const result = await sass.compile(projectPaths.styles.src, config.sass);
+    const result = await compileAsync(projectPaths.styles.src, config.sass);
     fs.writeFile(projectPaths.styles.dist, result.css);
   } catch (err) {
     console.error('SASS ERR:', err);
@@ -205,7 +205,6 @@ async function runBuild() {
   await fs.emptyDir(projectPaths.distDir);
 
   await Promise.all([
-    createSearchIndex(projectPaths.distDir),
     generateFavicons(),
     generateHtml(),
     generateSitemap(),
@@ -214,6 +213,7 @@ async function runBuild() {
     copyFiles(),
     compileSass()
   ]);
+  await createSearchIndex(projectPaths.distDir);
   await optimizeImages();
 }
 
