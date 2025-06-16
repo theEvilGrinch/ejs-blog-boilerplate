@@ -14,7 +14,7 @@ async function watchFiles() {
     {path: projectPaths.styles.srcDir, action: compileSass, label: 'SASS'},
     {path: projectPaths.templates.dir, action: generateHtml, label: 'EJS'},
     {path: projectPaths.articles.srcDir, action: generateHtml, label: 'HTML'},
-    {path: projectPaths.js.src, action: bundleJs, label: 'JS'}
+    {path: projectPaths.js.scriptsDir, action: bundleJs, label: 'JS'}
   ];
   const lastEvent = new Map();
   watchList.forEach(({path: watchPath, action, label}) => {

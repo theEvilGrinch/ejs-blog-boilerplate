@@ -30,6 +30,7 @@ export const projectPaths = {
   },
   js: {
     src: path.join(rootDir, 'src', 'scripts', 'index.mjs'),
+    scriptsDir: path.join(rootDir, 'src', 'scripts'),
     dist: path.join(rootDir, 'dist', 'index.mjs')
   },
   images: {
@@ -42,7 +43,7 @@ export const projectPaths = {
 export const config = {
   browserSync: {
     files: [
-      path.posix.join(projectPaths.distDir, '**', '*.{html,css,js}')
+      path.posix.join(projectPaths.distDir, '**', '*.{html,css,js,mjs}')
     ],
     ignore: [
       path.posix.join(projectPaths.distDir, 'pagefind', '**', '*')
