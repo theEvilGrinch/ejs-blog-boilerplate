@@ -39,6 +39,7 @@
 		"@type": "Audience",
 		"audienceType": "Developers"
 	},
+	for
 	"genre": "Technical",
 	<% if( name === 'index') { %>
 	"breadcrumb": {
