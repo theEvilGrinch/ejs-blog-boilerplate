@@ -21,7 +21,7 @@
     "stylelint:fix": "npx stylelint \"**/*.scss\" --fix",
     "eslint:fix": "npx eslint \"**/*.js\" --fix",
     "deploy": "gh-pages -d dist",
-    "predeploy": "npm run BUILD"
+    "predeploy": "npm run build"
   },
   "devDependencies": {
     "@stylistic/stylelint-plugin": "3.1.2",
