@@ -110,7 +110,6 @@ export const config = {
   images: {
     jpeg: {quality: 75, mozjpeg: true},
     png: {quality: 75, compressionLevel: 9},
-    webp: {quality: 75},
-    avif: {quality: 70, effort: 5}
+    webp: {quality: 75}
   }
 };

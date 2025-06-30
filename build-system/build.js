@@ -78,9 +78,6 @@ async function optimizeImages() {
       case '.webp':
         await sharp(input).webp(config.images.webp).toFile(output);
         break;
-      case '.avif':
-        await sharp(input).avif(config.images.avif).toFile(output);
-        break;
       case '.svg':
         const svgContent = await fs.readFile(input, 'utf8');
         const optimizedSvg = optimize(svgContent).data;
