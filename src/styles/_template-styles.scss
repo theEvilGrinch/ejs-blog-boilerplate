@@ -94,7 +94,7 @@ footer {
     align-items: center;
     gap: 30px;
 
-    a[href="humans.txt"] {
+    a[href$="humans.txt"] {
       display: inline-flex;
       flex-direction: column;
       align-items: center;

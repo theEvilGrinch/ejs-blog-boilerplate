@@ -1,4 +1,5 @@
 <head>
+  <% const base = typeof basePath !== 'undefined' ? basePath : '' %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <% if (!DEV_MODE) { %>
@@ -6,22 +7,22 @@
   <% } %>
   <title><%= title %></title>
   <meta name="description" content="<%= description %>">
-  <link rel="preload" href="main.css" as="style">
-  <link rel="preload" href="fonts/sft_regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/sft_medium.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/firacode_regular.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="pagefind/pagefind-ui.js" defer></script>
-  <script src="index.mjs" type="module"></script>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml">
-  <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="favicon-48x48.png" sizes="48x48" type="image/png">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" type="image/png">
+  <link rel="preload" href="<%= base %>main.css" as="style">
+  <link rel="preload" href="<%= base %>fonts/sft_regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="<%= base %>fonts/sft_medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="<%= base %>fonts/firacode_regular.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="<%= base %>pagefind/pagefind-ui.js" defer></script>
+  <script src="<%= base %>index.mjs" type="module"></script>
+  <link rel="icon" href="<%= base %>favicon.ico" type="image/x-icon">
+  <link rel="icon" href="<%= base %>favicon.svg" sizes="any" type="image/svg+xml">
+  <link rel="icon" href="<%= base %>favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="<%= base %>favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="<%= base %>favicon-48x48.png" sizes="48x48" type="image/png">
+  <link rel="apple-touch-icon" href="<%= base %>apple-touch-icon.png" type="image/png">
   <link rel="canonical" href="<%= url %>">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="feed.xml">
-  <link rel="author" href="humans.txt"><!-- TODO -->
+  <link rel="manifest" href="<%= base %>manifest.webmanifest">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<%= base %>feed.xml">
+  <link rel="author" href="<%= base %>humans.txt"><!-- TODO -->
   <meta name="theme-color" content="#102936">
   <meta name="msapplication-TileColor" content="#102936"><!-- TODO -->
   <meta name="msapplication-navbutton-color" content="#102936"><!-- TODO -->
@@ -39,7 +40,7 @@
   <meta property="og:locale" content="ru_RU"><!-- TODO -->
   <meta property="og:site_name" content="example.com"><!-- TODO -->
   <meta property="og:title" content="<%= og_title %>">
-  <meta property="og:url" content="https://example.com/index.html"><!-- TODO -->
+  <meta property="og:url" content="<%= url %>"><!-- TODO -->
   <meta property="og:description" content="<%= description %>">
   <meta property="og:image" content="https://example.com/img/<%= soc_img.name %>">
   <meta property="og:image:type" content="image/png">
@@ -53,7 +54,7 @@
   <meta name="twitter:description" content="<%= description %>">
   <meta name="twitter:image" content="https://example.com/img/<%= soc_img.name %>"><!-- TODO -->
   <meta name="twitter:image:alt" content=""><!-- TODO -->
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="<%= base %>main.css">
   <script type="application/ld+json">
     <% if (isTechArticle) { %>
       <%- include('./tech-article-microdata.json', {errorHandler: false}) %>

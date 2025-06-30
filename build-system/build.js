@@ -25,17 +25,14 @@ export async function generateHtml() {
   const template = await fs.readFile(projectPaths.templates.index, 'utf8');
 
   for (const article of articles) {
-    const html = ejs.render(template, {articles, ...article, isApacheServer, DEV_MODE }, { filename: projectPaths.templates.index });
+    const basePath = article.name === 'index' ? './' : '../';
+    const html = ejs.render(template, {articles, ...article, basePath, isApacheServer, DEV_MODE }, { filename: projectPaths.templates.index });
     const outputPath = article.name === 'index' ?
       path.join(projectPaths.distDir, 'index.html')
       : path.join(projectPaths.articles.distDir, `${article.name}.html`);
     await fs.ensureDir(path.dirname(outputPath));
-    if (!DEV_MODE) {
-      const minified = await minify(html, config.html);
-      await fs.writeFile(outputPath, minified);
-    } else {
-      await fs.writeFile(outputPath, html);
-    }
+    const finalContent = DEV_MODE ? html : await minify(html, config.html);
+    await fs.writeFile(outputPath, finalContent);
   }
 }
 
