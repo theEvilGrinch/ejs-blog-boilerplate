@@ -9,8 +9,8 @@
 	"name": "<%= title %>",
 	"mainEntity": {
 		"@type": "BlogPosting",
-		"@id": "<%= url %>#main-content",
-		"mainEntityOfPage": "true",
+		"@id": "<%= url %>",
+		"mainEntityOfPage": "<%= url %>#main-content",
 		"datePublished": "<%= published_date %>",
 		"dateModified": "<%= lastmod_date %>",
 		"headline": "<%= h1 %>",
@@ -29,7 +29,7 @@
 		},
 		"image": {
 			"@type": "ImageObject",
-			"url": "https://example.com/img/<% soc_img.name %>",
+			"url": "https://example.com/img/<%= soc_img.name %>",
 			"width": "1200",
 			"height": "630",
 			"isFamilyFriendly": "true"

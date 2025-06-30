@@ -22,9 +22,9 @@
 	},
 	"image": {
 		"@type": "ImageObject",
-		"url": "https://techblog.example.com/img/<% soc_img.name %>",
-		"width": 1200,
-		"height": 630
+		"url": "https://techblog.example.com/img/<%= soc_img.name %>",
+		"width": "1200",
+		"height": "630"
 	},
 	"keywords": "<%= keywords %>",
 	"proficiencyLevel": "<%= proficiencyLevel %>",
@@ -39,13 +39,13 @@
 		"@type": "Audience",
 		"audienceType": "Developers"
 	},
-	for
 	"genre": "Technical",
 	<% if( name === 'index') { %>
 	"breadcrumb": {
 		"@type": "BreadcrumbList",
 		"name": "Main navigation",
-		"itemListElement": {
+		"itemListElement": [
+    {
 			"@type": "ListItem",
 			"position": "1",
 			"item": {
@@ -53,7 +53,7 @@
 				"name": "Main page"
 			}
 		}
-	}
+  ]}
 	<% } else {%>
 	"breadcrumb": {
 		"@type": "BreadcrumbList",
